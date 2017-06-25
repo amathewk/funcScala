@@ -37,8 +37,14 @@ class BoolOrMonoid extends Monoid[Boolean] {
 }
 
 class OptionMonoid[A] extends Monoid[Option[A]] {
-  override def op(a1: Option[A], a2: Option[A]): Option[A] = if a1.isDefined a1.get
+  override def op(a1: Option[A], a2: Option[A]): Option[A] = if (a1.isDefined) a1 else a2
 
   override def zero: Option[A] = None
 
+}
+
+class EndoidMonoid[A] extends Monoid[A => A] {
+  override def op(a1: (A) => A, a2: (A) => A) = a1 compose a2
+
+  override def zero = {i:A=>i}
 }
